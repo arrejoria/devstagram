@@ -5,6 +5,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\ImagenController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,5 +34,6 @@ Route::post('/logout', [LogoutController::class, 'store'])->name('logout');
 
 // Muro e Informacion de Usuario
 // Route Model Binding - Entre llaves crearemos una variable hacia el modelo user
-Route::get('/{user:username}', [PostController::class, 'index']) -> name('post.index');
+Route::get('/{user:username}', [PostController::class, 'index'])->name('post.index');
 Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
+Route::post('/imagenes', [ImagenController::class, 'store'])->name('imagenes.store');

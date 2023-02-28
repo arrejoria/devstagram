@@ -7,10 +7,13 @@
 
     <title>DevStagram - @yield('titulo')</title>
 
-    {{-- @vite('resources/css/app.css') --}}
+
+    @stack('styles')
     
-    {{-- <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" /> --}}
-    <link rel="stylesheet" href="{{ mix('/css/app.css') }}">
+    @vite('resources/css/app.css')
+    @vite('resources/js/app.js')
+    {{-- <link rel="stylesheet" href="{{ mix('/css/app.css') }}"> --}}
+
 </head>
 
 <body class="bg-gray-100  ">
@@ -23,10 +26,8 @@
             @auth
                 <nav class="flex gap-2 items-center">
 
-                    <a
-                        class="flex items-center gap-2 bg-white border p-2 text-gray-600 rounded border-gray-600 text-sm uppercase font-bold cursor-pointer"
-                        href="{{ route('posts.create') }}"
-                    >
+                    <a class="flex items-center gap-2 bg-white border p-2 text-gray-600 rounded border-gray-600 text-sm uppercase font-bold cursor-pointer"
+                        href="{{ route('posts.create') }}">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-6 h-6">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -38,7 +39,7 @@
 
                         Crear
                     </a>
-                    
+
                     <a class="font-bold text-gray-600" href="{{ route('post.index', auth()->user()->username) }}">
                         Hola: <span class="font-normal">{{ auth()->user()->username }}</span>
                     </a>
@@ -75,6 +76,7 @@
         {{ now()->year }}
     </footer>
 
+    {{-- <script src="{{ mix('/js/app.js') }}"></script> --}}
 </body>
 
 </html>

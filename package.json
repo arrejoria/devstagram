@@ -1,8 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "dev": "npm run development",
-    "development": "mix"
+    "dev": "vite --watchFiles"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.13",
@@ -13,7 +12,7 @@
     "mix-tailwindcss": "^1.3.0",
     "postcss": "^8.4.21",
     "tailwindcss": "^3.2.7",
-    "vite": "^3.0.0"
+    "vite": "^4.1.4"
   },
   "name": "devstagram",
   "description": "<p align=\"center\"><a href=\"https://laravel.com\" target=\"_blank\"><img src=\"https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg\" width=\"400\" alt=\"Laravel Logo\"></a></p>",

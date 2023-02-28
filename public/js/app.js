@@ -12,13 +12,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var dropzone__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! dropzone */ "./node_modules/dropzone/dist/dropzone.mjs");
 
 dropzone__WEBPACK_IMPORTED_MODULE_0__["default"].autoDiscover = false;
-var dropzone = new dropzone__WEBPACK_IMPORTED_MODULE_0__["default"]("#myDropzone", {
+var dropzone = new dropzone__WEBPACK_IMPORTED_MODULE_0__["default"]("#dropzone", {
   dictDefaultMessage: "Sube aquí tu imagen",
   acceptedFiles: ".png,.jpg,.jpeg,.gif",
   addRemoveLinks: true,
   dictRemoveFile: "Borrar archivo",
   maxFiles: 1,
   uploadMultiple: false
+});
+dropzone.on('sending', function (file, xhr, formData) {
+  console.log(file);
 });
 
 /***/ }),
