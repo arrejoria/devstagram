@@ -12,17 +12,10 @@ const dropzone = new Dropzone("#dropzone", {
 
 });
 
-
-dropzone.on('sending', function(file,xhr,formData){
-    console.log(file, 'sending');
-});
 dropzone.on('success', function(file, response){
-    console.log(response, 'success');
-});
-dropzone.on('canceled', function(file){
-    console.log(file, 'canceled');
-});
-dropzone.on('error', function(file, message){
-    console.log(file, 'error'+ message);
+    document.querySelector('[name="imagen"]').value = response.imagen
 });
 
+dropzone.on('removedfile', function(file){
+    console.log(file);
+});

@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
-use App\Http\Controllers\LoginController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\ImagenController;
@@ -36,4 +36,6 @@ Route::post('/logout', [LogoutController::class, 'store'])->name('logout');
 // Route Model Binding - Entre llaves crearemos una variable hacia el modelo user
 Route::get('/{user:username}', [PostController::class, 'index'])->name('post.index');
 Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
+Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
+
 Route::post('/imagenes', [ImagenController::class, 'store'])->name('imagenes.store');

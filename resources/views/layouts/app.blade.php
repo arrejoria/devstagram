@@ -20,7 +20,7 @@
     <header class="border-b p-5 bg-white shadow">
         <div class="container mx-auto flex justify-between">
             <h1 class="text-3xl font-black">
-                <a href="#">Devstagram</a>
+                <a href="/">Devstagram</a>
             </h1>
 
             @auth

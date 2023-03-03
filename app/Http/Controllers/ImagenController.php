@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Intervention\Image\Facades\Image;
 
 class ImagenController extends Controller
 {
@@ -10,6 +12,14 @@ class ImagenController extends Controller
     {
         $imagen = $request->file('file');
 
-        return response()->JSON(['imagen'=>$imagen->extension()]);
+        $nombreImagen = Str::uuid().".".$imagen->extension();
+
+        $imagenServidor = Image::make($imagen);
+        $imagenServidor->fit(1000, 1000, null, 'center');
+
+        $imagenPath = public_path('uploads') . '/'. $nombreImagen;
+        $imagenServidor->save($imagenPath);
+        
+        return response()->JSON(['imagen'=>$nombreImagen]);
     }
 }
