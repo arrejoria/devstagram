@@ -5,69 +5,147 @@
 @endsection
 
 @section('contenido')
-    <div class="container mx-auto md:flex md:justify-center my-5 gap-6 bg-white shadow-xl divide-x-2 divide-gray-100">
-        <div class="md:w-6/12 xl:w-5/12 p-6">
-            {{-- <div class="flex md:flex-col mb-2 px-1 rounded-sm ">
-                <p class="text-base">Titulo: {{ $post->titulo }}</p>
-            </div> --}}
-            <img src="{{ asset('uploads') . '/' . $post->imagen }}" alt="" class="shadow-xl">
+    <div
+        class="container mx-auto md:flex md:justify-around items-center my-5 gap-2 bg-white shadow-xl divide-x-2 divide-gray-100">
+        <div class="md:w-1/2 p-4">
+            <img src="{{ asset('uploads') . '/' . $post->imagen }}" alt=" Imagen {{ $post->titulo }}" class="shadow-xl">
         </div>
-        <div class="md:w-5/12 md:flex md:flex-col p-6 ">
+        <div class="md:w-1/2 p-4">
             <div class="text-lg text-center text-gray-400 uppercase font-bold">
                 <h3>Detalles de la publicación</h3>
             </div>
-            <div class="flex md:flex-col px-4 pt-2 my-2 border-2 border-gray-300 h-auto rounded-md">
-                <p class="text-base font-bold">{{ $username }}: <span
-                        class="font-normal text-sm">{{ $post->descripcion }}</span></p>
-                <p class="text-xs text-right px-2 text-gray-300">{{ $created_date->format('d-m-y') }}</p>
-                <div class="divide-y-2">
-                    <h4 class="font-semibold text-gray-400">Comentarios</h4>
-                    <div class="h-64 overscroll-contain overflow-auto p-2 flex flex-col gap-y-3">
-                        <div class="text-sm flex">
-                            <a href=""><img src="#" alt="" class="">Usuario</a>
-                            <p class="ml-2">Lorem ipsum, dolor sit amet consectetur adipisicing elit. At facere tempora consequatur</p>
+            <div class="px-4 my-2 border w-full rounded-lg">
+                <div class="">
+                    <div class="flex justify-between py-4">
+                        <div class="flex items-baseline">
+                            <a href="{{ route('post.index', $user) }}" class="text-base font-bold mr-1">{{ $username }}:
+                            </a>
+                            <p class="font-normal text-sm">{{ $post->descripcion }}</p>
                         </div>
-                        <div class="text-sm flex">
-                            <a href=""><img src="#" alt="" class="">Usuario</a>
-                            <p class="ml-2">Lorem ipsum, dolor sit amet consectetur </p>
-                        </div>
-                        <div class="text-sm flex">
-                            <a href=""><img src="#" alt="" class="">Usuario</a>
-                            <p class="ml-2">Lorem ipsum, dolor sit amet consectetur adipisicing elit. At facere tempora consequatur</p>
-                        </div>
-                        <div class="text-sm flex">
-                            <a href=""><img src="#" alt="" class="">Usuario</a>
-                            <p class="ml-2">Loremr adipisicing elit. At facere tempora consequatur</p>
-                        </div>
-                        <div class="text-sm flex">
-                            <a href=""><img src="#" alt="" class="">Usuario</a>
-                            <p class="ml-2">Lorem ipsum, doisicing elit. At facere tempora consequatur</p>
-                        </div>
-                        <div class="text-sm flex">
-                            <a href=""><img src="#" alt="" class="">Usuario</a>
-                            <p class="ml-2">Lorem ipsum, doisicing elit. At facere tempora consequatur</p>
-                        </div>
-                        <div class="text-sm flex">
-                            <a href=""><img src="#" alt="" class="">Usuario</a>
-                            <p class="ml-2">Lorem ipsum, doisicing elit. At facere tempora consequatur</p>
-                        </div>
-                        <div class="text-sm flex">
-                            <a href=""><img src="#" alt="" class="">Usuario</a>
-                            <p class="ml-2">Lorem ipsum, doisicing elit. At facere tempora consequatur</p>
-                        </div>
-                        <div class="text-sm flex">
-                            <a href=""><img src="#" alt="" class="">Usuario</a>
-                            <p class="ml-2">Lorem ipsum, doisicing elit. At facere tempora consequatur</p>
-                        </div>
+                        @auth()
+                            @if (auth()->user()->username === $user->username)
+                                <form action="{{ route('posts.destroy', $post) }}" method="POST" id="optionForm">
+                                    @method('DELETE')
+                                    @csrf
+                                </form>
+
+                                <div class="relative" id="postDescription">
+                                    <span class="text-xl items-end text-gray-500 cursor-pointer">
+                                        <i class="ri-delete-bin-2-line" id="postOptions"></i>
+                                    </span>
+                                    <ul class=" bg-white border border-gray-500 text-sm font-bold p-3 hidden absolute rounded-md cursor-pointer"
+                                        id="showOptions">
+                                        <li class="text-red-500 hover:border-b">Eliminar</li>
+                                    </ul>
+                                </div>
+                            @endif
+                        @endauth
                     </div>
-                    <div>
-                        <form action="">
-                            @csrf
-                            <textarea name="comentario" id="" cols="" rows="" class="w-full p-2 shadow-sm my-2 border-2 border-gray-300 rounded-md" value='' placeholder="Deja tu comentario" ></textarea>
-                        </form>
+                    <div class="text-xs text-gray-500 mt-4 flex items-center gap-4">
+                        @auth
+                            @php
+                                $svg = '<svg xmlns="http://www.w3.org/2000/svg" fill="%s" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+                                </svg>';
+                            @endphp
+                            @if ($post->checkLikes(auth()->user()))
+                                <form action="{{ route('posts.likes.destroy', $post) }}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit">
+                                        {!! sprintf($svg, 'red') !!}
+                                    </button>
+                                </form>
+                            @else
+                                <form action="{{ route('posts.likes.store', $post) }}" method="post">
+                                    @csrf
+                                    <button type="submit">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24"
+                                            stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+                                        </svg>
+                                    </button>
+                                </form>
+                            @endif
+
+                        @endauth
+                        <p>0 Likes</p>
+                        <p>{{ $post->comentarios->count() }} comentarios</p>
+                    </div>
+                    <div class="flex justify-between text-sm text-gray-500">
+                        <p>{{ $post->created_at->diffForHumans() }}</p>
+                        <p>{{ $created_date->format('d-m-y') }}</p>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="border-b-2 py-2 border-gray-300 opacity-50 font-semibold text-gray-400">Comentarios</h4>
+                </div>
+                <div class="max-h-96 overscroll-contain overflow-auto">
+                    <div class="p-2">
+                        @if ($post->comentarios->count())
+                            @foreach ($post->comentarios as $comentario)
+                                <div class="mb-2">
+                                    <div class="text-sm flex ">
+                                        <a href="{{ route('post.index', $comentario->user) }}" class="font-bold"><img
+                                                src="#" alt="">{{ $comentario->user->username }}</a>
+                                        <p class="ml-2">{{ $comentario->comentario }}</p>
+                                    </div>
+                                    <div class="flex justify-end gap-2 text-xs text-gray-400">
+                                        <p class="cursor-pointer hover:text-red-500">Delete</p>
+                                    </div>
+                                    <p class="gap-2 text-sm text-gray-400">{{ $comentario->created_at->diffForHumans() }}
+                                    </p>
+                                </div>
+                            @endforeach
+                        @else
+                            <p class="p-10 text-center text-gray-400">No hay comentarios aún</p>
+                        @endif
                     </div>
                 </div>
             </div>
+
+            @auth
+                <div>
+                    <form action="{{ route('comentarios.store', ['post' => $post, 'user' => $user]) }}" method="POST">
+                        @csrf
+                        <div class="">
+                            @if (session('mensaje'))
+                                <div class="bg-green-500 text-xl my-1 p-3 animate-fadeIn w-full text-white text-center rounded-lg"
+                                    id="successComment">
+                                    <p class="">{{ session('mensaje') }}</p>
+                                </div>
+                                <script>
+                                    // Oculta el mensaje después de 3 segundos
+                                    setTimeout(() => {
+                                        document.getElementById('successComment').remove();
+                                    }, 3000);
+                                </script>
+                            @endif
+                            <textarea aria-label="Añade un comentario" cols="2" rows="1" id="comentario" name="comentario"
+                                placeholder="Añade un comentario..."
+                                class="border p-3 w-full rounded-lg  @error('descripcion') border-red-500 
+                        @enderror">{{ old('descripcion') }}</textarea>
+
+                            <div class="">
+                                @error('comentario')
+                                    <p class="bg-red-500 text-white p-2 my-2 rounded-lg text-sm text-center">{{ $message }}
+                                    </p>
+                                @enderror
+                                <label for="sendComment" class="cursor-pointer text-2xl text-gray-400 ">
+                                    {{-- <i class="ri-chat-3-line"></i> --}}
+                                </label>
+                                <input type="submit" id="sendComment" value="Crear comentario"
+                                    class="bg-sky-600 hover:bg-sky-700 transition-colors cursor-pointer uppercase font-bold w-full p-3 text-white rounded-lg mt-2" />
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            @endauth
+
         </div>
     </div>
 @endsection

@@ -18,7 +18,8 @@ class RegisterController extends Controller
     public function store(Request $request)
     {
 
-        // Modificando Request
+        // Modificando Request para que si se usa en URL sea mas amigable 
+        // EJ: Dev Learning, se vera como dev-learning 
         $request->request->add(['username' => Str::slug($request->username)]);
 
         // Validation 

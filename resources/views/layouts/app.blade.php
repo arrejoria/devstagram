@@ -11,7 +11,8 @@
     @stack('styles')
     
     @vite('resources/css/app.css')
-    @vite('resources/js/app.js')
+
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
     {{-- <link rel="stylesheet" href="{{ mix('/css/app.css') }}"> --}}
 
 </head>
@@ -77,6 +78,8 @@
     </footer>
 
     {{-- <script src="{{ mix('/js/app.js') }}"></script> --}}
+    @vite('resources/js/app.js')
+
 </body>
 
 </html>
