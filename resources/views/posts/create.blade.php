@@ -22,9 +22,9 @@
                 @csrf
                 <div class="mb-5">
                     <label for="titulo" class="mb-2 block uppercase text-gray-500 font-bold">
-                        Nombre
+                        Titulo
                     </label>
-                    <input id="titulo" name="titulo" type="text" placeholder="Tu Titulo"
+                    <input id="titulo" name="titulo" type="text" placeholder="Tu titulo"
                         class="border p-3 w-full rounded-lg @error('name') border-red-500 
                     @enderror" />
 
@@ -37,7 +37,7 @@
                     <label for="descripcion" class="mb-2 block uppercase text-gray-500 font-bold">
                         Descripción
                     </label>
-                    <textarea id="descripcion" name="descripcion" placeholder="Tu Descripcion"
+                    <textarea id="descripcion" name="descripcion" placeholder="Tu descripcion"
                         class="border p-3 w-full rounded-lg @error('descripcion') border-red-500 
                     @enderror">{{ old('descripcion') }}</textarea>
 

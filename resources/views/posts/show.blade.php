@@ -41,7 +41,7 @@
                             @endif
                         @endauth
                     </div>
-                    <div class="text-xs text-gray-500 mt-4 flex items-center gap-4">
+                    <div class="text-xs text-gray-500 mt-4 flex items-center gap-2">
                         @auth
                             @php
                                 $svg = '<svg xmlns="http://www.w3.org/2000/svg" fill="%s" viewBox="0 0 24 24"
@@ -50,41 +50,33 @@
                                         d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
                                 </svg>';
                             @endphp
-                            @if ($post->checkLikes(auth()->user()))
-                                <form action="{{ route('posts.likes.destroy', $post) }}" method="post">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit">
-                                        {!! sprintf($svg, 'red') !!}
-                                    </button>
-                                </form>
-                            @else
-                                <form action="{{ route('posts.likes.store', $post) }}" method="post">
-                                    @csrf
-                                    <button type="submit">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24"
-                                            stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
-                                        </svg>
-                                    </button>
-                                </form>
-                            @endif
+
+                            <button id="like-button"
+                                class="{{ $post->checkLikes(auth()->user()) ? 'text-red-500' : 'text-gray-500' }}"
+                                data-post-id='{{ $post->id }}'>
+                                {!! sprintf($svg, 'none') !!}
+                            </button>
 
                         @endauth
-                        <p>0 Likes</p>
-                        <p>{{ $post->comentarios->count() }} comentarios</p>
+
+                        <p class="font-bold" id="like-count">{{ $post->likes->count() }}</p>
+                        <span class="font-normal" id="like-text">
+                            {{ $post->likes->count() > 1 ? 'likes' : 'like' }}</span>
+                        <p class="font-bold">{{ $post->comentarios->count() }}
+                            <span class="font-normal">
+                                {{ $post->comentarios->count() == 1 ? 'comentario' : 'comentarios' }}</span>
+                        </p>
                     </div>
-                    <div class="flex justify-between text-sm text-gray-500">
-                        <p>{{ $post->created_at->diffForHumans() }}</p>
+                    <div class="flex justify-between text-xs mt-4 text-gray-500">
+                        <p>Publicación creada {{ $post->created_at->diffForHumans() }}</p>
                         <p>{{ $created_date->format('d-m-y') }}</p>
                     </div>
                 </div>
                 <div>
-                    <h4 class="border-b-2 py-2 border-gray-300 opacity-50 font-semibold text-gray-400">Comentarios</h4>
+                    <h5 class="border-b-2 p-2 border-gray-300 opacity-50 font-semibold text-gray-400">Comentarios</h5>
                 </div>
-                <div class="max-h-96 overscroll-contain overflow-auto">
-                    <div class="p-2">
+                <div class="max-h-60 overscroll-contain overflow-auto">
+                    <div class="">
                         @if ($post->comentarios->count())
                             @foreach ($post->comentarios as $comentario)
                                 <div class="mb-2">
@@ -93,11 +85,24 @@
                                                 src="#" alt="">{{ $comentario->user->username }}</a>
                                         <p class="ml-2">{{ $comentario->comentario }}</p>
                                     </div>
-                                    <div class="flex justify-end gap-2 text-xs text-gray-400">
-                                        <p class="cursor-pointer hover:text-red-500">Delete</p>
+                                    <div class="flex justify-between items-center gap-2 text-sm text-gray-400">
+                                        <p class="">
+                                            {{ $comentario->created_at->diffForHumans() }}
+                                        </p>
+                                        @auth
+                                            @if ($comentario->user_id === auth()->user()->id)
+                                                <form
+                                                    action="{{ route('comentarios.destroy', ['user' => $user->username, 'post' => $post->id, 'comentario' => $comentario->id]) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="cursor-pointer hover:text-red-500 pr-2"
+                                                        id="comment-delete">delete</button>
+                                                </form>
+                                            @endif
+                                        @endauth
                                     </div>
-                                    <p class="gap-2 text-sm text-gray-400">{{ $comentario->created_at->diffForHumans() }}
-                                    </p>
+
                                 </div>
                             @endforeach
                         @else
@@ -111,8 +116,7 @@
                 <div>
                     <form action="{{ route('comentarios.store', ['post' => $post, 'user' => $user]) }}" method="POST">
                         @csrf
-                        <div class="">
-                            @if (session('mensaje'))
+                        {{-- @if (session('mensaje'))
                                 <div class="bg-green-500 text-xl my-1 p-3 animate-fadeIn w-full text-white text-center rounded-lg"
                                     id="successComment">
                                     <p class="">{{ session('mensaje') }}</p>
@@ -123,29 +127,29 @@
                                         document.getElementById('successComment').remove();
                                     }, 3000);
                                 </script>
-                            @endif
-                            <textarea aria-label="Añade un comentario" cols="2" rows="1" id="comentario" name="comentario"
-                                placeholder="Añade un comentario..."
-                                class="border p-3 w-full rounded-lg  @error('descripcion') border-red-500 
+                            @endif --}}
+                        <textarea aria-label="Añade un comentario" cols="2" rows="1" id="comentario" name="comentario"
+                            placeholder="Añade un comentario..."
+                            class="border p-3 w-full rounded-lg  @error('descripcion') border-red-500 
                         @enderror">{{ old('descripcion') }}</textarea>
 
-                            <div class="">
-                                @error('comentario')
-                                    <p class="bg-red-500 text-white p-2 my-2 rounded-lg text-sm text-center">{{ $message }}
-                                    </p>
-                                @enderror
-                                <label for="sendComment" class="cursor-pointer text-2xl text-gray-400 ">
-                                    {{-- <i class="ri-chat-3-line"></i> --}}
-                                </label>
-                                <input type="submit" id="sendComment" value="Crear comentario"
-                                    class="bg-sky-600 hover:bg-sky-700 transition-colors cursor-pointer uppercase font-bold w-full p-3 text-white rounded-lg mt-2" />
-                            </div>
+                        <div>
+                            @error('comentario')
+                                <p class="bg-red-500 text-white p-2 my-2 rounded-lg text-sm text-center">{{ $message }}
+                                </p>
+                            @enderror
+                            <label for="sendComment" class="cursor-pointer text-2xl text-gray-400 ">
+                                {{-- <i class="ri-chat-3-line"></i> --}}
+                            </label>
+                            <input type="submit" id="sendComment" value="Crear comentario"
+                                class="bg-sky-600 hover:bg-sky-700 transition-colors cursor-pointer uppercase font-bold w-full p-3 text-white rounded-lg mt-2" />
                         </div>
-                    </form>
-
                 </div>
-            @endauth
+                </form>
 
-        </div>
+            </div>
+        @endauth
+
+    </div>
     </div>
 @endsection

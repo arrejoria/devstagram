@@ -2,26 +2,25 @@
 
 namespace App\Policies;
 
-use App\Models\Like;
+use App\Models\Comentario;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class LikePolicy
+class ComentarioPolicy
 {
     use HandlesAuthorization;
 
    
-
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Like  $like
+     * @param  \App\Models\Comentario  $comentario
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Like $like)
+    public function delete(User $user, Comentario $comentario)
     {
-        return $user->id === $like->user_id;
+        return $user->id === $comentario->user_id;
     }
 
 }

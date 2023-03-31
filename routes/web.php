@@ -8,6 +8,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ComentarioController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\LikeController;
+use App\Http\Controllers\PerfilController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,11 +45,17 @@ Route::delete('/posts/{post}',[PostController::class, 'destroy'])->name('posts.d
 
 // Comentario
 Route::post('/{user:username}/posts/{post}', [ComentarioController::class, 'store'])->name('comentarios.store');
-Route::delete('/{user:username}/posts/{post}', [ComentarioController::class, 'destroy'])->name('comentarios.destroy');
+Route::delete('/{user:username}/posts/{post}/comentarios/{comentario}', [ComentarioController::class, 'destroy'])->name('comentarios.destroy');
+
 
 // Almacenar imagenes
 Route::post('/imagenes', [ImagenController::class, 'store'])->name('imagenes.store');
 
 // Like a las fotos
 Route::post('/posts/{post}/likes', [LikeController::class, 'store'])->name('posts.likes.store');
-Route::delete('/posts/{post}/likes', [LikeController::class, 'destroy'])->name('posts.likes.destroy');
+Route::delete('/posts/{post}/unlikes', [LikeController::class, 'destroy'])->name('posts.unlikes.destroy');
+
+
+// Rutas para el perfil 
+Route::get('{user:username}/editar-perfil', [PerfilController::class, 'index'])->name('perfil.index');
+Route::post('{user:username}/editar-perfil', [PerfilController::class, 'store'])->name('perfil.store');

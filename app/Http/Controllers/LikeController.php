@@ -8,22 +8,37 @@ use Illuminate\Http\Request;
 
 class LikeController extends Controller
 {
-    
 
     public function store(Request $request, Post $post)
     {
         $post->likes()->create([
-            'user_id'=> $request->user()->id
+            'user_id' => $request->user()->id,
+            'post_id' => $post-> id
         ]);
+        
+        if ($request->wantsJson()) {
+            $response = [
+                'likes' => $post->likes()->count(),
+                'liked' => true
+            ];
 
-        return back();
+            return response()->json($response);
+        } 
+        
     }
 
     public function destroy(Request $request, Post $post)
     {
-        $request->user()->likes()->where('post_id', $post->id)->delete();
+        $post->likes()->where('user_id', $request->user()->id)->delete();
 
-        return back();
+        if ($request->wantsJson()) {
+            $response = [
+                'likes' => $post->likes()->count(),
+                'liked' => false
+            ];
+
+            return response()->json($response);
+
+        } 
     }
-    
 }
