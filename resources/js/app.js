@@ -50,7 +50,8 @@ if (dropzoneId) {
 
 function postFunctions () {
     const postOptions = document.querySelector('#postOptions'),
-        showOptions = document.querySelector('#showOptions')
+        showOptions = document.querySelector('#showOptions'),
+        postOptionForm = document.querySelector('#optionsForm')
 
     // ShowOptions on Click
     if (postOptions) {
@@ -62,6 +63,9 @@ function postFunctions () {
             } else {
                 document.removeEventListener('click', hideOptionsOnClickOutside)
             }
+
+            handlePostOptions (showOptions, 0, handleEditOption);
+            handlePostOptions (showOptions, 1, handleDeleteOption);
         })
 
         function hideOptionsOnClickOutside (e) {
@@ -74,60 +78,74 @@ function postFunctions () {
             }
         }
 
-        showOptions.firstElementChild.addEventListener(
-            'click',
-            handleDeleteOption
-        )
+       
 
-        function handleDeleteOption () {
-            showOptions.classList.toggle('hidden')
-            optionForm.submit()
-        }
-    }
+      
+}
+function handlePostOptions (optionList, optionPosition, handle) {
+    if(optionList)
+    postOptionForm
+    optionList.children[optionPosition].addEventListener(
+        'click',
+        handle
+    )
+    showOptions.classList.toggle('hidden')
+}
+
+ 
+function handleEditOption () {
+    console.log('editando')
+    postOptionForm.method = 'DELETE';
+}
+
+function handleDeleteOption () {
+console.log('deleting')
+// return postOptionForm.submit()
+}
+
 }
 
 // Peticion HTTP mediante axios al darle like y dislike a un post
 
 const likeButton = document.getElementById('like-button')
-const likeCount = document.getElementById('like-count')
-const postId = likeButton.getAttribute('data-post-id')
-const likeText = document.getElementById('like-text')
 
-function updateLikeCountAndText(likeCount, response, likeText) {
-    likeCount.textContent = response.data.likes;
-    likeText.textContent = `${response.data.likes === 1 ? 'like' : 'likes'}`;
-  }
-  
+if (likeButton) {
+    const likeCount = document.getElementById('like-count')
+    const postId = likeButton.getAttribute('data-post-id')
+    const likeText = document.getElementById('like-text')
 
-
-let isRequestPending = false
-
-likeButton.addEventListener('click', async () => {
-    if (isRequestPending) return
-
-    isRequestPending = true
-    likeButton.disabled = true
-
-    const alreadyLiked = likeButton.classList.contains('text-red-500')
-    const action = alreadyLiked
-        ? `/posts/${postId}/unlikes`
-        : `/posts/${postId}/likes`
-
-    try {
-        const response = await axios({
-            method: alreadyLiked ? 'DELETE' : 'POST',
-            url: action
-        })
-
-        updateLikeCountAndText(likeCount, response, likeText)
-        
-        likeButton.classList = `text-${alreadyLiked ? 'gray' : 'red'}-500`;
-    } catch (error) {
-        console.log(error)
+    function updateLikeCountAndText (likeCount, response, likeText) {
+        likeCount.textContent = response.data.likes
+        likeText.textContent = `${response.data.likes === 1 ? 'like' : 'likes'}`
     }
 
-    isRequestPending = false
-    likeButton.disabled = false
-})
+    let isRequestPending = false
 
+    likeButton.addEventListener('click', async () => {
+        if (isRequestPending) return
 
+        isRequestPending = true
+        likeButton.disabled = true
+
+        const alreadyLiked = likeButton.classList.contains('text-red-500')
+        const action = alreadyLiked
+            ? `/posts/${postId}/unlikes`
+            : `/posts/${postId}/likes`
+
+        try {
+            const response = await axios({
+                method: alreadyLiked ? 'DELETE' : 'POST',
+                url: action
+            })
+
+            updateLikeCountAndText(likeCount, response, likeText)
+
+            likeButton.classList = `text-${alreadyLiked ? 'gray' : 'red'}-500`
+        } catch (error) {
+            console.log(error)
+        }
+
+        isRequestPending = false
+        likeButton.disabled = false
+    })
+}

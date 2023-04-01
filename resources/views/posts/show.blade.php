@@ -10,7 +10,7 @@
         <div class="md:w-1/2 p-4">
             <img src="{{ asset('uploads') . '/' . $post->imagen }}" alt=" Imagen {{ $post->titulo }}" class="shadow-xl">
         </div>
-        <div class="md:w-1/2 p-4">
+        <div class="md:w-1/2 p-4 self-start">
             <div class="text-lg text-center text-gray-400 uppercase font-bold">
                 <h3>Detalles de la publicación</h3>
             </div>
@@ -24,7 +24,7 @@
                         </div>
                         @auth()
                             @if (auth()->user()->username === $user->username)
-                                <form action="{{ route('posts.destroy', $post) }}" method="POST" id="optionForm">
+                                <form action="{{ route('posts.destroy', $post) }}" method="POST" id="optionsForm">
                                     @method('DELETE')
                                     @csrf
                                 </form>
@@ -35,6 +35,7 @@
                                     </span>
                                     <ul class=" bg-white border border-gray-500 text-sm font-bold p-3 hidden absolute rounded-md cursor-pointer"
                                         id="showOptions">
+                                        <li class="text-gray-400 hover:border-b"><a href="{{ route('/editar-post') }}">Editar</a></li>
                                         <li class="text-red-500 hover:border-b">Eliminar</li>
                                     </ul>
                                 </div>

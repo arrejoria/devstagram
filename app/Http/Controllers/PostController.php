@@ -80,6 +80,10 @@ class PostController extends Controller
         }
         return redirect()->route('post.index', auth()->user()->username);
 
+    }
 
+    public function edit(){
+
+        dd('editando publicacion');
     }
 }
