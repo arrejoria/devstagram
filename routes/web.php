@@ -7,6 +7,7 @@ use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ComentarioController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\FollowerController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PerfilController;
 
@@ -35,12 +36,14 @@ Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'store']);
 Route::post('/logout', [LogoutController::class, 'store'])->name('logout');
 
+// Rutas para el perfil 
+Route::get('/editar-perfil', [PerfilController::class, 'index'])->name('perfil.index');
+Route::post('/editar-perfil', [PerfilController::class, 'store'])->name('perfil.store');
+
 // Muro e Informacion de Usuario
 // Route Model Binding - Entre llaves crearemos una variable hacia el modelo user
-Route::get('/{user:username}', [PostController::class, 'index'])->name('post.index');
 Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
 Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
-Route::get('/{user:username}/posts/{post}',[PostController::class, 'show'])->name('posts.show');
 Route::delete('/posts/{post}',[PostController::class, 'destroy'])->name('posts.destroy');
 Route::delete('/posts/{post}/edit',[PostController::class, 'edit'])->name('posts.edit');
 
@@ -49,6 +52,9 @@ Route::delete('/posts/{post}/edit',[PostController::class, 'edit'])->name('posts
 Route::post('/{user:username}/posts/{post}', [ComentarioController::class, 'store'])->name('comentarios.store');
 Route::delete('/{user:username}/posts/{post}/comentarios/{comentario}', [ComentarioController::class, 'destroy'])->name('comentarios.destroy');
 
+// Followers
+Route::post('/{user:username}/follow',[FollowerController::class, 'store'])->name('users.follow');
+Route::delete('/{user:username}/follow',[FollowerController::class, 'destroy'])->name('users.unfollow');
 
 // Almacenar imagenes
 Route::post('/imagenes', [ImagenController::class, 'store'])->name('imagenes.store');
@@ -57,7 +63,5 @@ Route::post('/imagenes', [ImagenController::class, 'store'])->name('imagenes.sto
 Route::post('/posts/{post}/likes', [LikeController::class, 'store'])->name('posts.likes.store');
 Route::delete('/posts/{post}/unlikes', [LikeController::class, 'destroy'])->name('posts.unlikes.destroy');
 
-
-// Rutas para el perfil 
-Route::get('{user:username}/editar-perfil', [PerfilController::class, 'index'])->name('perfil.index');
-Route::post('{user:username}/editar-perfil', [PerfilController::class, 'store'])->name('perfil.store');
+Route::get('/{user:username}', [PostController::class, 'index'])->name('post.index');
+Route::get('/{user:username}/posts/{post}',[PostController::class, 'show'])->name('posts.show');

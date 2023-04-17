@@ -149,3 +149,30 @@ if (likeButton) {
         likeButton.disabled = false
     })
 }
+
+// Nav Bar on Mobile
+
+const menuToggle = document.getElementById('menu-toggle');
+const menu = document.getElementById('menu');
+
+if(menuToggle){
+    menuToggle.addEventListener('click', () => {
+        menu.classList.toggle('show');
+      });
+}
+
+
+// Handle Nav Bar on Scroll
+const headerBar = document.querySelector('#headerBar'),
+      scrollPositionY = 100;
+
+function handleScroll(){
+    if(window.scrollY > scrollPositionY){
+        console.log(headerBar);
+        headerBar.classList.add('shadow-out');
+    }else{
+        headerBar.classList.remove('shadow-out');
+    }
+}
+
+window.addEventListener('scroll', handleScroll)

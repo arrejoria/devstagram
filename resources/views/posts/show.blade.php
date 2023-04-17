@@ -35,7 +35,7 @@
                                     </span>
                                     <ul class=" bg-white border border-gray-500 text-sm font-bold p-3 hidden absolute rounded-md cursor-pointer"
                                         id="showOptions">
-                                        <li class="text-gray-400 hover:border-b"><a href="{{ route('/editar-post') }}">Editar</a></li>
+                                        <li class="text-gray-400 hover:border-b"><a href="#">Editar</a></li>
                                         <li class="text-red-500 hover:border-b">Eliminar</li>
                                     </ul>
                                 </div>
