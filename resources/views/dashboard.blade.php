@@ -49,7 +49,7 @@
                             <form action="{{ route('users.follow', $user) }}" method="POST">
                                 @csrf
                                 <button type="submit"
-                                    class="text-xs text-white font-semibold uppercase bg-violet-600 px-2 py-1 mt-2  rounded hover:shadow">Follow</button>
+                                    class="text-xs text-white font-semibold uppercase bg-[color:var(--main-color)] px-2 py-1 mt-2  rounded hover:shadow">Follow</button>
                             </form>
                         @else
                             <form action="{{ route('users.unfollow', $user) }}" method="POST">

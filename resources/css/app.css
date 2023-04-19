@@ -3,27 +3,14 @@
 @tailwind utilities;
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Niconne&family=Yeseva+One&display=swap');
 
-@media (max-width: 767px) {
-  #menu-toggle {
-    display: block;
-  }
-
-  #menu {
-    display: none;
-    position: absolute;
-    top: 4rem;
-    left: 0;
-    right: 0;
-    background-color: white;
-    border: 1px solid #e2e8f0;
-    border-radius: 0.5rem;
-    padding: 1rem;
-  }
-
-  #menu.show {
-    display: block;
-  }
+:root {
+  --main-color: rgba(124, 58, 237, 1)
+}
+/* Header */
+.logo {
+  font: normal italic bold 2.5rem/1rem 'Niconne','Yeseva';
 }
 
 .heart-icon {
@@ -51,6 +38,27 @@
     opacity: 1!important;
 }
 
+@media (max-width: 767px) {
+  #menu-toggle {
+    display: block;
+  }
+
+  #menu {
+    display: none;
+    position: absolute;
+    top: 4rem;
+    left: 0;
+    right: 0;
+    background-color: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.5rem;
+    padding: 1rem;
+  }
+
+  #menu.show {
+    display: block;
+  }
+}
 /****
  * ====== NAV BAR ====== *
  ****/

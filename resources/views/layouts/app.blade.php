@@ -22,9 +22,9 @@
     <header class="border-b p-5 bg-white fixed-nav z-10 header-shadow" id="headerBar">
         
         <div class="container mx-auto flex flex-row xs:flex-col justify-between" >
-            <h1 class="text-3xl text-violet-600 font-bold">
-                <a href="/">Devstagram</a>
-            </h1>
+            <a href="/" class="logo" class="text-3xl text-[color:var(--main-color)] font-bold">
+                Devstagram
+            </a>
 
             @auth
                 <button id="menu-toggle" class="md:hidden flex items-center">
@@ -37,7 +37,7 @@
 
                 <div id="menu" class="md:flex md:items-center justify-between">
                     <nav class="flex gap-2 relative">
-                        <a class="flex items-center gap-2 bg-white border p-2 text-gray-600 rounded border-violet-600 text-sm uppercase font-bold cursor-pointer"
+                        <a class="flex items-center gap-2 bg-white border p-2 text-gray-600 rounded border-[color:var(--main-color)] text-sm uppercase font-bold cursor-pointer"
                             href="{{ route('posts.create') }}">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="rgba(124, 58, 237)" class="w-6 h-6">
@@ -48,7 +48,7 @@
                             </svg>
                             Crear
                         </a>
-                        <div class="flex flex-col md:flex-row md:gap-4 items-center p-4 border border-violet-600 ">
+                        <div class="flex flex-col md:flex-row md:gap-4 items-center p-4">
                             <a class="font-bold text-gray-600" href="{{ route('post.index', auth()->user()->username) }}">
                                 Hola: <span class="font-normal">{{ auth()->user()->username }}</span>
                             </a>
