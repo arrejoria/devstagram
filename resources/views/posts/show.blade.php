@@ -31,39 +31,14 @@
                             <a href=""><img src="#" alt="" class="">Usuario</a>
                             <p class="ml-2">Lorem ipsum, dolor sit amet consectetur </p>
                         </div>
-                        <div class="text-sm flex">
-                            <a href=""><img src="#" alt="" class="">Usuario</a>
-                            <p class="ml-2">Lorem ipsum, dolor sit amet consectetur adipisicing elit. At facere tempora consequatur</p>
-                        </div>
-                        <div class="text-sm flex">
-                            <a href=""><img src="#" alt="" class="">Usuario</a>
-                            <p class="ml-2">Loremr adipisicing elit. At facere tempora consequatur</p>
-                        </div>
-                        <div class="text-sm flex">
-                            <a href=""><img src="#" alt="" class="">Usuario</a>
-                            <p class="ml-2">Lorem ipsum, doisicing elit. At facere tempora consequatur</p>
-                        </div>
-                        <div class="text-sm flex">
-                            <a href=""><img src="#" alt="" class="">Usuario</a>
-                            <p class="ml-2">Lorem ipsum, doisicing elit. At facere tempora consequatur</p>
-                        </div>
-                        <div class="text-sm flex">
-                            <a href=""><img src="#" alt="" class="">Usuario</a>
-                            <p class="ml-2">Lorem ipsum, doisicing elit. At facere tempora consequatur</p>
-                        </div>
-                        <div class="text-sm flex">
-                            <a href=""><img src="#" alt="" class="">Usuario</a>
-                            <p class="ml-2">Lorem ipsum, doisicing elit. At facere tempora consequatur</p>
-                        </div>
-                        <div class="text-sm flex">
-                            <a href=""><img src="#" alt="" class="">Usuario</a>
-                            <p class="ml-2">Lorem ipsum, doisicing elit. At facere tempora consequatur</p>
-                        </div>
                     </div>
                     <div>
-                        <form action="">
+                        <form action="{{ route('comentarios.store') }}" method="POST">
                             @csrf
                             <textarea name="comentario" id="" cols="" rows="" class="w-full p-2 shadow-sm my-2 border-2 border-gray-300 rounded-md" value='' placeholder="Deja tu comentario" ></textarea>
+                            <button type="submit" class="w-full bg-sky-500 p-2 mb-2 border rounded-lg text-white font-bold uppercase text-md">
+                                enviar comentario
+                            </button>
                         </form>
                     </div>
                 </div>

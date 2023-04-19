@@ -5,6 +5,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\ComentarioController;
 use App\Http\Controllers\ImagenController;
 
 /*
@@ -40,3 +41,7 @@ Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
 Route::get('/{user:username}/posts/{post}',[PostController::class, 'show'])->name('posts.show');
 
 Route::post('/imagenes', [ImagenController::class, 'store'])->name('imagenes.store');
+
+// Comentarios
+// Route::get('/comentarios', [ComentarioController::class, 'create'])->name('comentarios.create');
+Route::post('/comentarios', [ComentarioController::class, 'store'])->name('comentarios.store');

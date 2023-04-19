@@ -40,7 +40,7 @@
                     <textarea id="descripcion" name="descripcion" placeholder="Tu Descripcion"
                         class="border p-3 w-full rounded-lg @error('descripcion') border-red-500 
                     @enderror">{{ old('descripcion') }}</textarea>
-
+ 
                     @error('descripcion')
                         <p class="bg-red-500 text-white p-2 my-2 rounded-lg text-sm text-center">{{ $message }}</p>
                     @enderror
@@ -55,6 +55,7 @@
                     @error('imagen')
                         <p class="bg-red-500 text-white p-2 my-2 rounded-lg text-sm text-center">{{ $message }}</p>
                     @enderror
+                    
                 </div>
 
                 <input type="submit" value="Crear Publicación"
