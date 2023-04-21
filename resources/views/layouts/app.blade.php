@@ -12,16 +12,25 @@
     @stack('styles')
 
     @vite('resources/css/app.css')
+    @vite('vendor/emoji-picker/lib/css/emoji.css')
 
+    {{-- Remix Icons --}}
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
-    {{-- <link rel="stylesheet" href="{{ mix('/css/app.css') }}"> --}}
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    @stack('scripts')
+    {{-- jQuery --}}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
 
 </head>
 
 <body class="bg-gray-100  ">
     <header class="border-b p-5 bg-white fixed-nav z-10 header-shadow" id="headerBar">
-        
-        <div class="container mx-auto flex flex-row xs:flex-col justify-between" >
+
+        <div class="container mx-auto flex flex-row xs:flex-col items-center justify-between">
             <a href="/" class="logo" class="text-3xl text-[color:var(--main-color)] font-bold">
                 Devstagram
             </a>
@@ -87,6 +96,14 @@
     </footer>
 
     {{-- <script src="{{ mix('/js/app.js') }}"></script> --}}
+
+    {{-- Emoji Picker  --}}
+
+    {{-- @vite('vendor/emoji-picker/lib/js/config.js')
+    @vite('vendor/emoji-picker/lib/js/util.js')
+    @vite('vendor/emoji-picker/lib/js/jquery.emojiarea.js')
+    @vite('vendor/emoji-picker/lib/js/emoji-picker.js') --}}
+
     @vite('resources/js/app.js')
 
 </body>

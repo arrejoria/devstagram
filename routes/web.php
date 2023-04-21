@@ -63,3 +63,4 @@ Route::delete('/posts/{post}/unlikes', [LikeController::class, 'destroy'])->name
 
 Route::get('/{user:username}', [PostController::class, 'index'])->name('post.index');
 Route::get('/{user:username}/posts/{post}',[PostController::class, 'show'])->name('posts.show');
+Route::get('/post/comentarios', [ComentarioController::class, 'index']);

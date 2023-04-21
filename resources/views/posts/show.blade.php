@@ -15,7 +15,7 @@
                 <h3>Detalles de la publicación</h3>
             </div>
             <div class="px-4 my-2 border w-full rounded-lg">
-                <div class="">
+                <div class="h-40">
                     <div class="flex justify-between py-4">
                         <div class="flex items-baseline">
                             <a href="{{ route('post.index', $user) }}" class="text-base font-bold mr-1">{{ $username }}:
@@ -62,7 +62,7 @@
 
                         <p class="font-bold" id="like-count">{{ $post->likes->count() }}</p>
                         <span class="font-normal" id="like-text">
-                            {{ $post->likes->count() > 1 ? 'likes' : 'like' }}</span>
+                           @choice('like|likes',  $post->likes->count()) </span>
                         <p class="font-bold">{{ $post->comentarios->count() }}
                             <span class="font-normal">
                                 {{ $post->comentarios->count() == 1 ? 'comentario' : 'comentarios' }}</span>
@@ -77,11 +77,11 @@
                     <h5 class="border-b-2 p-2 border-gray-300 opacity-50 font-semibold text-gray-400">Comentarios</h5>
                 </div>
                 <div class="max-h-60 overscroll-contain overflow-auto">
-                    <div class="">
+                    <div class="mt-2">
                         @if ($post->comentarios->count())
                             @foreach ($post->comentarios as $comentario)
-                                <div class="mb-2">
-                                    <div class="text-sm flex ">
+                                <div class="mb-2" id="comment-item">
+                                    <div class="text-sm flex " >
                                         <a href="{{ route('post.index', $comentario->user) }}" class="font-bold"><img
                                                 src="#" alt="">{{ $comentario->user->username }}</a>
                                         <p class="ml-2">{{ $comentario->comentario }}</p>
@@ -115,7 +115,8 @@
 
             @auth
                 <div>
-                    <form action="{{ route('comentarios.store', ['post' => $post, 'user' => $user]) }}" method="POST">
+                    <form action="{{ route('comentarios.store', ['post' => $post, 'user' => $user]) }}" method="POST"
+                        id="frm-comment">
                         @csrf
                         {{-- @if (session('mensaje'))
                                 <div class="bg-green-500 text-xl my-1 p-3 animate-fadeIn w-full text-white text-center rounded-lg"
@@ -129,9 +130,11 @@
                                     }, 3000);
                                 </script>
                             @endif --}}
+
                         <textarea aria-label="Añade un comentario" cols="2" rows="1" id="comentario" name="comentario"
-                            placeholder="Añade un comentario..."
-                            class="border p-3 w-full rounded-lg  @error('descripcion') border-red-500 
+                            placeholder="Añade un comentario..." data-emojiable="true" data-emoji-input="unicode"
+                            class="border p-3 w-full rounded-lg
+                            @error('descripcion') border-red-500 
                         @enderror">{{ old('descripcion') }}</textarea>
 
                         <div>
@@ -145,6 +148,32 @@
                             <input type="submit" id="sendComment" value="Crear comentario"
                                 class="bg-sky-600 hover:bg-sky-700 transition-colors cursor-pointer uppercase font-bold w-full p-3 text-white rounded-lg mt-2" />
                         </div>
+                        {{-- <div class="comment-form-container">
+                            <form id="frm-comment">
+                                <div class="input-row">
+                                    <input type="hidden" name="comment_id" id="commentId"
+                                        placeholder="Name" /> <input class="input-field w-full border mb-2" type="text"
+                                        name="name" id="name" placeholder="Name" />
+                                </div>
+                
+                                <div class="input-row">
+                                    <p class="emoji-picker-container">
+                                        <textarea class="input-field w-full border" data-emojiable="true"
+                                            data-emoji-input="unicode" type="text" name="comment"
+                                            id="comment" placeholder="Add a Message">  </textarea>
+                                    </p>
+                                </div>
+                
+                                <div>
+                                    <input type="button" class="btn-submit bg-red-500 p-5 cursor-pointer" id="submitButton"
+                                        value="Add a Comment" />
+                                    <div id="comment-message">Comment Added Successfully!</div>
+                                </div>
+                
+                
+                            </form>
+                        </div>
+                        <div id="output"></div> --}}
                 </div>
                 </form>
 

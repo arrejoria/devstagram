@@ -9,7 +9,11 @@ use Illuminate\Http\Request;
 
 class ComentarioController extends Controller
 {
-
+    public function index()
+    {
+        $comments = Comentario::all();
+        return response()->json($comments);
+    }
 
     public function store(Request $request, User $user, Post $post)
     {
@@ -22,17 +26,21 @@ class ComentarioController extends Controller
         );
 
         // Almacenar en la base de datos
-        Comentario::create([
-            'user_id' => auth()->user()->id,
-            'post_id' => $post->id,
-            'comentario' => $request->comentario
-        ]);
+        $comentario = new Comentario();
+        $comentario->user_id = auth()->user()->id;
+        $comentario->post_id = $post->id;
+        $comentario->comentario = $request->comentario;
+        $comentario->save();
 
-
-
-
-        // Retornar vista
+        // Retornar respuesta en formato JSON
         return back()->with('mensaje', 'Comentario Realizado Correctamente');
+        // return response()->json([
+        //     'status' => 'success',
+        //     'message' => 'Comentario Realizado Correctamente',
+        //     'comentario' => $comentario->comentario,
+        //     'username' => auth()->user()->username,
+        //     'post_id' => $comentario->post_id
+        // ]);
     }
 
 

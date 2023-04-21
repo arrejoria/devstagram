@@ -24,9 +24,16 @@
                     <label for="titulo" class="mb-2 block uppercase text-gray-500 font-bold">
                         Titulo
                     </label>
-                    <input id="titulo" name="titulo" type="text" placeholder="Tu titulo"
-                        class="border p-3 w-full rounded-lg @error('name') border-red-500 
-                    @enderror" />
+                    <input 
+                        id="titulo"
+                        name="titulo"
+                        type="text"
+                        value="{{old('titulo')}}"
+                        placeholder="Tu titulo"
+                        class="border p-3 w-full rounded-lg 
+                        
+                        @error('name') border-red-500 
+                        @enderror" />
 
                     @error('titulo')
                         <p class="bg-red-500 text-white p-2 my-2 rounded-lg text-sm text-center">{{ $message }}</p>
@@ -37,9 +44,14 @@
                     <label for="descripcion" class="mb-2 block uppercase text-gray-500 font-bold">
                         Descripción
                     </label>
-                    <textarea id="descripcion" name="descripcion" placeholder="Tu descripcion"
-                        class="border p-3 w-full rounded-lg @error('descripcion') border-red-500 
-                    @enderror">{{ old('descripcion') }}</textarea>
+                    <textarea 
+                        id="descripcion"
+                        name="descripcion"
+                        placeholder="Tu descripcion"
+                        class="border p-3 w-full rounded-lg
+                        @error('descripcion') border-red-500 
+                        @enderror">{{ old('descripcion') }}
+                    </textarea>
 
                     @error('descripcion')
                         <p class="bg-red-500 text-white p-2 my-2 rounded-lg text-sm text-center">{{ $message }}</p>
